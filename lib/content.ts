@@ -45,7 +45,17 @@ export const proof = [
   },
 ] as const;
 
-export type WorkLink = { label: string; href: string };
+/**
+ * kind drives how prominently a link is rendered:
+ * "live" = a running thing anyone can open, "source" = readable code, "site" = a landing page.
+ */
+export type WorkLink = {
+  label: string;
+  /** Compact label, for tight spots like the hero proof row. */
+  short: string;
+  href: string;
+  kind: "live" | "source" | "site";
+};
 
 export type Work = {
   slug: string;
@@ -60,6 +70,10 @@ export type Work = {
   /** null when the source is private — renders as a stated fact, never a dead link. */
   privateNote: string | null;
   featured: boolean;
+  /** Three short facts, for people who scan instead of read. */
+  highlights: readonly string[];
+  /** Badge shown only when something here is publicly verifiable. null otherwise. */
+  status: string | null;
   /** Case-study body. */
   problem: string;
   approach: readonly { heading: string; body: string }[];
@@ -87,9 +101,22 @@ export const work: readonly Work[] = [
       "pgvector",
       "Streamlit",
     ],
-    links: [{ label: "Source", href: "https://github.com/Suju75/analytics-copilot" }],
+    links: [
+      {
+        label: "Read the source",
+        short: "GitHub",
+        href: "https://github.com/Suju75/analytics-copilot",
+        kind: "source",
+      },
+    ],
     privateNote: null,
     featured: true,
+    highlights: [
+      "5-stage evidence pipeline",
+      "SELECT-only, read-only guardrails",
+      "Eval-scored routing accuracy",
+    ],
+    status: "Source public on GitHub",
     problem:
       "Business users ask questions that live in two different places. “What was churn last quarter?” is a SQL question. “What counts as an active account?” is a documentation question. “Why did churn move?” is both. Most LLM assistants collapse this distinction, hand the model everything, and hope. The result is answers that read fluently and cite nothing.",
     approach: [
@@ -135,11 +162,27 @@ export const work: readonly Work[] = [
       "App Store Connect",
     ],
     links: [
-      { label: "App Store", href: "https://apps.apple.com/app/the-gym-buddy-os/id6808116640" },
-      { label: "thegymbuddy.in", href: "https://thegymbuddy.in" },
+      {
+        label: "Get it on the App Store",
+        short: "App Store",
+        href: "https://apps.apple.com/app/the-gym-buddy-os/id6808116640",
+        kind: "live",
+      },
+      {
+        label: "thegymbuddy.in",
+        short: "Site",
+        href: "https://thegymbuddy.in",
+        kind: "site",
+      },
     ],
     privateNote: "Source is private — walkthrough available on request.",
     featured: true,
+    highlights: [
+      "Public v1.0 on the App Store",
+      "Owner, trainer, member roles",
+      "Per-record tenant isolation",
+    ],
+    status: "Live on the Apple App Store",
     problem:
       "Independent gyms run on spreadsheets and WhatsApp. Replacing that means one system serving three different people — an owner who needs the business view, a trainer who needs their own roster, and a member who should only ever see themselves — while guaranteeing that no gym's data is ever visible to another.",
     approach: [
@@ -176,6 +219,12 @@ export const work: readonly Work[] = [
     links: [],
     privateNote: "Private repo — available on request.",
     featured: false,
+    highlights: [
+      "Nifty 100 screening universe",
+      "Adversarial scoring gate",
+      "Paper-trading only",
+    ],
+    status: null,
     problem:
       "Screening the Nifty 100 with one model produces confident, unfalsifiable picks. There is no internal disagreement, so nothing filters out the false positives — which is the only failure mode that costs you anything.",
     approach: [
@@ -215,8 +264,15 @@ export const work: readonly Work[] = [
       "Gemini",
     ],
     links: [],
-    privateNote: "Internal client work — architecture discussed at a high level only.",
+    privateNote:
+      "Internal client work — architecture discussed at a high level only.",
     featured: false,
+    highlights: [
+      "29 licenses across 6 teams",
+      "Daily automated pipeline",
+      "CEO-facing 30/60/90 plan",
+    ],
+    status: null,
     problem:
       "An organization with Gemini licenses across six teams had no visibility into adoption. Without usage data, leadership cannot tell the difference between a tool that failed and a tool nobody was onboarded onto — and cannot make a defensible call on renewal.",
     approach: [
@@ -247,6 +303,16 @@ export const work: readonly Work[] = [
 ];
 
 export const featuredWork = work.filter((w) => w.featured);
+
+/**
+ * Anything a stranger can open and check for themselves, paired with its project.
+ * Derived from `work` so the hero can never advertise a link the case study lacks.
+ */
+export const liveProof = work.flatMap((w) =>
+  w.links
+    .filter((l) => l.kind !== "site")
+    .map((l) => ({ project: w.title, ...l })),
+);
 
 export type ExperienceItem = {
   role: string;

@@ -1,13 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
 import { useRef, type PointerEvent } from "react";
 import { expo, viewportOnce } from "@/lib/motion";
 import { work, type Work } from "@/lib/content";
+import { StatusBadge, WorkLinkButton } from "./work-links";
 
 /** Column spans, deliberately uneven so no two cards read as the same tile. */
-const SPANS = ["lg:col-span-7", "lg:col-span-5", "lg:col-span-5", "lg:col-span-7"];
+const SPANS = [
+  "lg:col-span-7",
+  "lg:col-span-5",
+  "lg:col-span-5",
+  "lg:col-span-7",
+];
 
 export function WorkGrid() {
   return (
@@ -71,10 +82,14 @@ function WorkCard({ item, emphasis }: { item: Work; emphasis: boolean }) {
         style={{ background: glow }}
       />
 
+      {/* The whole card opens the case study. Real links sit above this. */}
       <Link
         href={`/work/${item.slug}`}
-        className="relative flex h-full flex-col p-6 sm:p-8"
-      >
+        aria-label={`Case study: ${item.title}`}
+        className="absolute inset-0 z-0"
+      />
+
+      <div className="pointer-events-none relative z-10 flex h-full flex-col p-6 sm:p-8">
         <div className="flex items-start justify-between gap-6">
           <span className="label">{item.kind}</span>
           <span className="font-mono text-[0.625rem] tracking-[0.14em] text-mist-3">
@@ -82,9 +97,18 @@ function WorkCard({ item, emphasis }: { item: Work; emphasis: boolean }) {
           </span>
         </div>
 
+        {/* Publicly verifiable work says so, in the one colour reserved for evidence. */}
+        {item.status ? (
+          <div className="mt-5 self-start">
+            <StatusBadge status={item.status} />
+          </div>
+        ) : null}
+
         <h3
-          className={`mt-6 font-medium tracking-[-0.025em] text-mist ${
-            emphasis ? "text-[1.75rem] sm:text-[2rem]" : "text-[1.5rem] sm:text-[1.65rem]"
+          className={`font-medium tracking-[-0.025em] text-mist ${item.status ? "mt-4" : "mt-6"} ${
+            emphasis
+              ? "text-[1.75rem] sm:text-[2rem]"
+              : "text-[1.5rem] sm:text-[1.65rem]"
           }`}
         >
           {item.title}
@@ -100,8 +124,31 @@ function WorkCard({ item, emphasis }: { item: Work; emphasis: boolean }) {
           </p>
         ) : null}
 
-        <div className="mt-6 flex flex-wrap gap-1.5">
-          {item.stack.slice(0, emphasis ? 7 : 4).map((s) => (
+        {/* The skim layer: three facts, no sentences. */}
+        <ul className="mt-5 flex flex-col gap-2">
+          {item.highlights.map((h) => (
+            <li
+              key={h}
+              className="flex items-center gap-2.5 text-[0.8125rem] text-mist"
+            >
+              <svg
+                viewBox="0 0 16 16"
+                className="h-3 w-3 shrink-0 text-verify"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M2.5 8.5l3.5 3.5 7.5-8" />
+              </svg>
+              {h}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-5 flex flex-wrap gap-1.5">
+          {item.stack.slice(0, emphasis ? 6 : 4).map((s) => (
             <span
               key={s}
               className="rounded-md border border-white/[0.07] bg-white/[0.025] px-2 py-1 font-mono text-[0.625rem] tracking-wide text-mist-3"
@@ -111,9 +158,17 @@ function WorkCard({ item, emphasis }: { item: Work; emphasis: boolean }) {
           ))}
         </div>
 
-        <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 pt-8">
-          <span className="flex items-center gap-2 text-[0.8125rem] font-medium text-mist">
-            Read case study
+        <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-2.5 pt-7">
+          {item.links.map((l) => (
+            <WorkLinkButton
+              key={l.href}
+              link={l}
+              className="pointer-events-auto relative z-20"
+            />
+          ))}
+
+          <span className="flex items-center gap-2 px-1 text-[0.8125rem] font-medium text-mist-2 transition-colors group-hover:text-mist">
+            Case study
             <svg
               viewBox="0 0 16 16"
               className="h-3.5 w-3.5 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
@@ -127,19 +182,13 @@ function WorkCard({ item, emphasis }: { item: Work; emphasis: boolean }) {
             </svg>
           </span>
 
-          {item.links.map((l) => (
-            <span key={l.href} className="text-[0.8125rem] text-mist-3">
-              {l.label}
-            </span>
-          ))}
-
           {item.privateNote ? (
             <span className="font-mono text-[0.625rem] tracking-[0.1em] text-mist-3 uppercase">
               source private
             </span>
           ) : null}
         </div>
-      </Link>
+      </div>
     </motion.div>
   );
 }

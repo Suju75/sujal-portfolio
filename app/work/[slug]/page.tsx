@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { work } from "@/lib/content";
 import { Reveal, RevealWords } from "@/components/ui/reveal";
 import { PipelineRow } from "@/components/pipeline-row";
+import { StatusBadge, WorkLinkButton } from "@/components/work-links";
 
 export function generateStaticParams() {
   return work.map((w) => ({ slug: w.slug }));
@@ -58,11 +59,12 @@ export default async function CaseStudy({
           </Link>
         </Reveal>
 
-        <div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-2">
+        <div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-3">
           <span className="label">{item.kind}</span>
           <span className="font-mono text-[0.625rem] tracking-[0.14em] text-mist-3">
             {item.year}
           </span>
+          {item.status ? <StatusBadge status={item.status} /> : null}
         </div>
 
         <h1 className="mt-6 text-[2.4rem] leading-[1.05] font-medium tracking-[-0.035em] sm:text-[3.25rem]">
@@ -80,6 +82,17 @@ export default async function CaseStudy({
             {item.premise}
           </p>
         </Reveal>
+
+        {/* Promoted above the fold — if it can be opened, it should be obvious. */}
+        {item.links.length > 0 ? (
+          <Reveal delay={0.32}>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              {item.links.map((l) => (
+                <WorkLinkButton key={l.href} link={l} />
+              ))}
+            </div>
+          </Reveal>
+        ) : null}
 
         {/* Meta */}
         <Reveal delay={0.34}>
@@ -99,36 +112,33 @@ export default async function CaseStudy({
             </div>
 
             <div>
-              <span className="label">Links</span>
-              <div className="mt-3 flex flex-col gap-2">
-                {item.links.map((l) => (
-                  <a
-                    key={l.href}
-                    href={l.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group inline-flex items-center gap-2 text-[0.9375rem] text-mist transition-colors hover:text-iris"
+              <span className="label">At a glance</span>
+              <ul className="mt-3 flex flex-col gap-2">
+                {item.highlights.map((h) => (
+                  <li
+                    key={h}
+                    className="flex items-center gap-2.5 text-[0.875rem] text-mist"
                   >
-                    {l.label}
                     <svg
                       viewBox="0 0 16 16"
-                      className="h-3 w-3 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      className="h-3 w-3 shrink-0 text-verify"
                       fill="none"
                       stroke="currentColor"
-                      strokeWidth="1.7"
+                      strokeWidth="2.2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     >
-                      <path d="M5 11L11 5M6 5h5v5" />
+                      <path d="M2.5 8.5l3.5 3.5 7.5-8" />
                     </svg>
-                  </a>
+                    {h}
+                  </li>
                 ))}
-                {item.privateNote ? (
-                  <p className="text-[0.8125rem] leading-relaxed text-mist-3">
-                    {item.privateNote}
-                  </p>
-                ) : null}
-              </div>
+              </ul>
+              {item.privateNote ? (
+                <p className="mt-3 text-[0.8125rem] leading-relaxed text-mist-3">
+                  {item.privateNote}
+                </p>
+              ) : null}
             </div>
           </div>
         </Reveal>
