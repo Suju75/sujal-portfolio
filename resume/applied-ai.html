@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sujal Jethva — Applied AI Resume</title>
+<style>
+  @page { size: Letter; margin: .42in .48in; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    color: #111;
+    background: #fff;
+    font-family: Calibri, "Helvetica Neue", Arial, sans-serif;
+    font-size: 9.75pt;
+    line-height: 1.21;
+  }
+  h1 {
+    margin: 0 0 1px;
+    font-size: 21.5pt;
+    line-height: 1.05;
+    letter-spacing: .35px;
+    text-transform: uppercase;
+  }
+  .contact {
+    margin: 0 0 6px;
+    color: #333;
+    font-size: 9pt;
+    line-height: 1.35;
+  }
+  a { color: inherit; text-decoration: underline; }
+  .contact a { text-decoration: none; }
+  .summary {
+    margin: 0 0 7px;
+    font-size: 9.65pt;
+    line-height: 1.23;
+  }
+  h2 {
+    margin: 8px 0 4px;
+    padding-bottom: 2px;
+    border-bottom: 1.2px solid #111;
+    color: #102d4b;
+    font-size: 10.9pt;
+    line-height: 1;
+    letter-spacing: .45px;
+    text-transform: uppercase;
+  }
+  .head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: baseline;
+  }
+  .name { font-weight: 700; }
+  .org, .stack { color: #444; font-style: italic; }
+  .date {
+    color: #333;
+    font-size: 9.1pt;
+    white-space: nowrap;
+  }
+  ul {
+    margin: 2px 0 4px;
+    padding-left: 16px;
+  }
+  li { margin: 1.1px 0; padding-left: 1px; }
+  .skills p { margin: 1.6px 0; }
+  .skills strong { color: #102d4b; }
+</style>
+</head>
+<body>
+  <h1>Sujal Jethva</h1>
+  <div class="contact">
+    Dallas, TX &nbsp;|&nbsp; (214) 899-7210 &nbsp;|&nbsp;
+    <a href="mailto:jethvasujal86@gmail.com">jethvasujal86@gmail.com</a><br>
+    <a href="https://www.linkedin.com/in/sujal-jethva-1116-">linkedin.com/in/sujal-jethva-1116-</a> &nbsp;|&nbsp;
+    <a href="https://github.com/Suju75">github.com/Suju75</a> &nbsp;|&nbsp;
+    <a href="https://sujal-jethva.vercel.app">sujal-jethva.vercel.app</a>
+  </div>
+
+  <div class="summary">
+    Applied AI / LLM engineer with a strong analytics foundation and hands-on experience building evidence-grounded RAG,
+    text-to-SQL, and LLM workflow systems. Built an evidence-grounded analytics assistant and shipped a multi-tenant iOS app; strong in Python,
+    SQL, FastAPI, and BI.
+  </div>
+
+  <h2>Education</h2>
+  <div class="head">
+    <div><span class="name">The University of Texas at Dallas</span> — M.S. Business Analytics, AI Flex (GPA 3.4 · GRE 336/340)</div>
+    <div class="date">Aug 2025 – May 2027 · Dallas, TX</div>
+  </div>
+  <div class="head">
+    <div><span class="name">Veer Narmad South Gujarat University</span> — Bachelor of Computer Applications</div>
+    <div class="date">Feb 2025 · Surat, India</div>
+  </div>
+
+  <h2>Experience</h2>
+  <div class="head">
+    <div><span class="name">AI Specialist Intern</span> &nbsp; <span class="org">PROJXON (Business Optimization Consulting)</span></div>
+    <div class="date">June 2026 – Present · Dallas, TX</div>
+  </div>
+  <ul>
+    <li>Built a four-part <strong>Gemini AI-usage solution</strong> covering 29 licenses across 6 teams: daily Admin Reports API pipeline, executive dashboard, custom “AI Usage Analyst” Gem, and CEO-facing 30/60/90 adoption plan.</li>
+    <li>Automated a social-analytics pipeline across 3 brand accounts (Python + Meta Graph API → pandas → Sheets → Looker Studio), replacing manual weekly reporting with scheduled dashboards.</li>
+    <li>Evaluated four LLM families (Claude, Gemini, Grok, GPT) against business use cases and standardized reusable prompts and workflows for team adoption.</li>
+  </ul>
+
+  <div class="head">
+    <div><span class="name">Data Analyst</span> &nbsp; <span class="org">Bharat Futurist AI</span></div>
+    <div class="date">June 2024 – June 2025 · Surat, India</div>
+  </div>
+  <ul>
+    <li>Analyzed 120K+ operational records with SQL (CTEs, window functions) and Python to build forecasting logic, improving accuracy 30% and supporting Director-level decisions.</li>
+    <li>Automated SQL reporting pipelines across 5+ sources and built KPI-driven Power BI dashboards, cutting manual effort 35% and turnaround time 30%.</li>
+  </ul>
+
+  <div class="head">
+    <div><span class="name">Software &amp; Data Intern</span> &nbsp; <span class="org">TOPS Technologies Pvt. Ltd</span></div>
+    <div class="date">Mar 2024 – June 2024 · Surat, India</div>
+  </div>
+  <ul>
+    <li>Built end-to-end full-stack web apps (Java, Spring Boot, React, MySQL) with RESTful APIs and dynamic UIs.</li>
+    <li>Automated SQL reporting workflows and optimized complex queries, reducing manual reporting effort 60% and improving reliability.</li>
+  </ul>
+
+  <h2>Projects</h2>
+  <div class="head">
+    <div><span class="name">Analytics Copilot</span> — <span class="stack">Python, FastAPI, Claude/Gemini API, PostgreSQL/pgvector, Streamlit</span></div>
+    <div class="date"><a href="https://github.com/Suju75/analytics-copilot">GitHub</a></div>
+  </div>
+  <ul>
+    <li>Built an AI assistant that answers plain-English business questions by routing each query to a SQL query, document search (RAG), or both — grounding every answer in evidence (SQL, data tables, charts, source links).</li>
+    <li>Engineered a text-to-SQL layer with defense-in-depth guardrails (SELECT-only, read-only, timeouts, auto-retry) and semantic doc search over pgvector with local embeddings; validated with a routing / number-accuracy eval suite.</li>
+  </ul>
+
+  <div class="head">
+    <div><span class="name">Indian Stock Selection Agent</span> — <span class="stack">Python, LLM orchestration, Telegram</span></div>
+    <div class="date">Private repo · available on request</div>
+  </div>
+  <ul>
+    <li>Orchestrated role-specific agents with separate screening, challenge, and decision responsibilities to move Nifty 100 candidates through quantitative filters and a devil’s-advocate scoring gate.</li>
+    <li>Implemented explicit ship-gate logic to control false positives and delivered results through Telegram; paper-trading only, with no live capital.</li>
+  </ul>
+
+  <div class="head">
+    <div><span class="name">The Gym Buddy OS</span> — <span class="stack">React Native (Expo), Prisma, PostgreSQL, Docker</span></div>
+    <div class="date"><a href="https://apps.apple.com/app/the-gym-buddy-os/id6808116640">App Store v1.0</a> · <a href="https://thegymbuddy.in">thegymbuddy.in</a></div>
+  </div>
+  <ul>
+    <li>Shipped a multi-tenant gym-management iOS app (owner / trainer / member roles) to the Apple App Store, enforcing strict per-tenant data isolation on every record.</li>
+    <li>Built the backend API, role-based dashboards, and release pipeline (EAS builds, App Store Connect).</li>
+  </ul>
+
+  <h2>Technical Skills</h2>
+  <div class="skills">
+    <p><strong>AI / GenAI:</strong> RAG, LLM Tool-Calling / Function Calling, AI Agents &amp; Automations, Text-to-SQL, Prompt Engineering, Vector Databases (pgvector), Embeddings &amp; Semantic Search, LLM Evaluation &amp; Guardrails, Claude / OpenAI / Gemini APIs</p>
+    <p><strong>Programming &amp; Backend:</strong> Python (Pandas, NumPy, scikit-learn), SQL (CTEs, Window Functions), Java, Spring Boot, React / React Native, FastAPI, Streamlit, REST APIs</p>
+    <p><strong>BI &amp; Data:</strong> Power BI, Tableau, Looker Studio, ETL, Data Modeling, KPI Reporting, Statistical Analysis, Predictive Modeling, Data Visualization</p>
+    <p><strong>Tools &amp; Databases:</strong> PostgreSQL, MySQL, Prisma, Docker, Git / GitHub, Google Apps Script, Meta Graph API, Excel</p>
+    <p><strong>Certifications:</strong> Google Professional Data Analytics Certificate · Prompt Engineering for ChatGPT</p>
+  </div>
+</body>
+</html>
