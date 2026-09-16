@@ -13,7 +13,7 @@ export const profile = {
   email: "jethvasujal86@gmail.com",
   phone: "(214) 899-7210",
   github: "https://github.com/Suju75",
-  linkedin: "https://www.linkedin.com/in/sujal-jethva-1116-",
+  linkedin: "https://www.linkedin.com/in/sujal-jethva-1116-/",
   resume: "/Sujal_Jethva_Applied_AI_Resume.pdf",
   headline: "I build AI systems that show their evidence.",
   subhead:

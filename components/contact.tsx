@@ -7,6 +7,7 @@ import { RevealWords } from "./ui/reveal";
 
 const channels = [
   { label: "Email", value: profile.email, href: `mailto:${profile.email}` },
+  { label: "LinkedIn", value: "in/sujal-jethva-1116-", href: profile.linkedin },
   { label: "GitHub", value: "github.com/Suju75", href: profile.github },
   { label: "Résumé", value: "One page, PDF", href: profile.resume },
 ];
