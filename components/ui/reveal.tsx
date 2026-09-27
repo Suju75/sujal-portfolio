@@ -1,71 +1,68 @@
 "use client";
+import { useEffect, useRef, type ReactNode } from "react";
 
-import { motion, useInView } from "framer-motion";
-import { useRef, type ReactNode } from "react";
-import { expo, viewportOnce } from "@/lib/motion";
-
+/** Content is visible in server HTML; motion is a progressive enhancement. */
 export function Reveal({
   children,
   delay = 0,
-  y = 20,
-  className,
+  y = 18,
+  className = "",
 }: {
   children: ReactNode;
   delay?: number;
   y?: number;
   className?: string;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const element = ref.current;
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (!element || preference.matches || !("IntersectionObserver" in window))
+      return;
+    let animation: Animation | undefined;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        animation = element.animate(
+          [{ transform: `translateY(${y}px)` }, { transform: "translateY(0)" }],
+          {
+            duration: 800,
+            delay: delay * 1000,
+            easing: "cubic-bezier(.16,1,.3,1)",
+          },
+        );
+        observer.disconnect();
+      },
+      { threshold: 0.08 },
+    );
+    const stop = () => {
+      if (preference.matches) {
+        animation?.cancel();
+        observer.disconnect();
+      }
+    };
+    preference.addEventListener("change", stop);
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+      animation?.cancel();
+      preference.removeEventListener("change", stop);
+    };
+  }, [delay, y]);
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={viewportOnce}
-      transition={{ duration: 0.85, ease: expo, delay }}
-    >
+    <div ref={ref} className={className}>
       {children}
-    </motion.div>
+    </div>
   );
 }
-
-/**
- * Splits a line into words and reveals each from behind a clip mask.
- * Used only on the two largest headings — it loses its impact if repeated.
- */
 export function RevealWords({
   text,
   className,
-  delay = 0,
-  stagger = 0.045,
 }: {
   text: string;
   className?: string;
   delay?: number;
   stagger?: number;
 }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, viewportOnce);
-  const words = text.split(" ");
-
-  return (
-    <span ref={ref} className={className}>
-      {words.map((word, i) => (
-        <span
-          key={`${word}-${i}`}
-          className="inline-block overflow-hidden align-bottom"
-          style={{ paddingBottom: "0.12em", marginBottom: "-0.12em" }}
-        >
-          <motion.span
-            className="inline-block"
-            initial={{ y: "110%" }}
-            animate={inView ? { y: 0 } : { y: "110%" }}
-            transition={{ duration: 1, ease: expo, delay: delay + i * stagger }}
-          >
-            {word}
-            {i < words.length - 1 ? "\u00A0" : ""}
-          </motion.span>
-        </span>
-      ))}
-    </span>
-  );
+  return <span className={className}>{text}</span>;
 }

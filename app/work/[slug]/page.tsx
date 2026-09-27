@@ -1,15 +1,15 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { work } from "@/lib/content";
-import { Reveal, RevealWords } from "@/components/ui/reveal";
 import { PipelineRow } from "@/components/pipeline-row";
 import { StatusBadge, WorkLinkButton } from "@/components/work-links";
-
+import { ReasoningTrace } from "@/components/reasoning-trace";
+import { Arrow } from "@/components/icons";
 export function generateStaticParams() {
   return work.map((w) => ({ slug: w.slug }));
 }
-
 export async function generateMetadata({
   params,
 }: {
@@ -21,9 +21,14 @@ export async function generateMetadata({
   return {
     title: `${item.title} — Sujal Jethva`,
     description: item.tagline,
+    alternates: { canonical: `/work/${item.slug}` },
+    openGraph: {
+      title: `${item.title} — Sujal Jethva`,
+      description: item.tagline,
+      url: `/work/${item.slug}`,
+    },
   };
 }
-
 export default async function CaseStudy({
   params,
 }: {
@@ -32,208 +37,131 @@ export default async function CaseStudy({
   const { slug } = await params;
   const item = work.find((w) => w.slug === slug);
   if (!item) notFound();
-
-  const index = work.findIndex((w) => w.slug === slug);
-  const next = work[(index + 1) % work.length];
-
+  const next = work[(work.findIndex((w) => w.slug === slug) + 1) % work.length];
   return (
-    <article className="px-6 pt-32 pb-8 sm:px-10 sm:pt-40">
-      <div className="mx-auto max-w-4xl">
-        <Reveal>
-          <Link
-            href="/#work"
-            className="group inline-flex items-center gap-2 font-mono text-[0.6875rem] tracking-[0.14em] text-mist-3 uppercase transition-colors hover:text-mist"
-          >
-            <svg
-              viewBox="0 0 16 16"
-              className="h-3 w-3 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-1"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M13 8H3M7 4L3 8l4 4" />
-            </svg>
-            All work
-          </Link>
-        </Reveal>
-
-        <div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-3">
-          <span className="label">{item.kind}</span>
-          <span className="font-mono text-[0.625rem] tracking-[0.14em] text-mist-3">
-            {item.year}
-          </span>
-          {item.status ? <StatusBadge status={item.status} /> : null}
+    <article className="case-study site-width">
+      <div className="case-topline">
+        <Link href="/#work" className="text-link">
+          ← All work
+        </Link>
+        {item.status ? (
+          <StatusBadge status={item.status} />
+        ) : (
+          <span className="project-status">{item.privateNote}</span>
+        )}
+      </div>
+      <header className="case-heading">
+        <p className="eyebrow accent-iris">
+          {item.kind} / {item.year}
+        </p>
+        <h1>{item.title}</h1>
+        <p>{item.tagline}</p>
+        <div className="project-actions">
+          {item.links.map((link) => (
+            <WorkLinkButton key={link.href} link={link} />
+          ))}
         </div>
-
-        <h1 className="mt-6 text-[2.4rem] leading-[1.05] font-medium tracking-[-0.035em] sm:text-[3.25rem]">
-          <RevealWords text={item.title} className="block text-lume" />
-        </h1>
-
-        <Reveal delay={0.2}>
-          <p className="mt-7 max-w-2xl text-[1.125rem] leading-relaxed text-mist-2">
-            {item.tagline}
-          </p>
-        </Reveal>
-
-        <Reveal delay={0.28}>
-          <p className="mt-7 max-w-2xl border-l border-iris/30 pl-5 text-[1rem] leading-relaxed text-mist italic">
-            {item.premise}
-          </p>
-        </Reveal>
-
-        {/* Promoted above the fold — if it can be opened, it should be obvious. */}
-        {item.links.length > 0 ? (
-          <Reveal delay={0.32}>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              {item.links.map((l) => (
-                <WorkLinkButton key={l.href} link={l} />
-              ))}
-            </div>
-          </Reveal>
-        ) : null}
-
-        {/* Meta */}
-        <Reveal delay={0.34}>
-          <div className="mt-12 grid gap-8 border-y border-white/[0.07] py-8 sm:grid-cols-[1.4fr_1fr]">
-            <div>
-              <span className="label">Stack</span>
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {item.stack.map((s) => (
-                  <span
-                    key={s}
-                    className="rounded-md border border-white/[0.07] bg-white/[0.025] px-2 py-1 font-mono text-[0.625rem] tracking-wide text-mist-2"
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <span className="label">At a glance</span>
-              <ul className="mt-3 flex flex-col gap-2">
-                {item.highlights.map((h) => (
-                  <li
-                    key={h}
-                    className="flex items-center gap-2.5 text-[0.875rem] text-mist"
-                  >
-                    <svg
-                      viewBox="0 0 16 16"
-                      className="h-3 w-3 shrink-0 text-verify"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M2.5 8.5l3.5 3.5 7.5-8" />
-                    </svg>
-                    {h}
-                  </li>
-                ))}
-              </ul>
-              {item.privateNote ? (
-                <p className="mt-3 text-[0.8125rem] leading-relaxed text-mist-3">
-                  {item.privateNote}
-                </p>
-              ) : null}
-            </div>
-          </div>
-        </Reveal>
-
-        {/* Problem */}
-        <section className="mt-16">
-          <Reveal>
-            <span className="label">The problem</span>
-          </Reveal>
-          <Reveal delay={0.06}>
-            <p className="mt-5 text-[1.0625rem] leading-[1.75] text-mist-2">
-              {item.problem}
-            </p>
-          </Reveal>
-        </section>
-
-        {/* Pipeline */}
-        <div className="mt-16">
-          <PipelineRow nodes={item.pipeline} />
-        </div>
-
-        {/* Approach */}
-        <section className="mt-16">
-          <Reveal>
-            <span className="label">Approach</span>
-          </Reveal>
-
-          <div className="mt-8 space-y-10">
-            {item.approach.map((step, i) => (
-              <Reveal key={step.heading} delay={i * 0.05}>
-                <div className="border-l border-white/[0.09] pl-6 transition-colors duration-500 hover:border-iris/40">
-                  <h2 className="text-[1.1875rem] font-medium tracking-[-0.015em] text-mist">
-                    {step.heading}
-                  </h2>
-                  <p className="mt-3 text-[1rem] leading-[1.75] text-mist-2">
-                    {step.body}
-                  </p>
-                </div>
-              </Reveal>
+      </header>
+      <div className="case-summary">
+        <div>
+          <h2>AT A GLANCE</h2>
+          <ul>
+            {item.highlights.map((highlight) => (
+              <li key={highlight}>{highlight}</li>
             ))}
-          </div>
+          </ul>
+        </div>
+        <div>
+          <h2>BUILT WITH</h2>
+          <p>{item.stack.join(" / ")}</p>
+          {item.privateNote ? <p>{item.privateNote}</p> : null}
+        </div>
+      </div>
+      <div className="case-body">
+        <section className="case-section">
+          <h2>The problem</h2>
+          <p>{item.problem}</p>
         </section>
-
-        {/* Outcome */}
-        <section className="mt-16">
-          <Reveal>
-            <span className="label">Where it landed</span>
-          </Reveal>
-          <ul className="mt-6 space-y-4">
-            {item.outcome.map((o, i) => (
-              <Reveal key={o} delay={i * 0.05}>
-                <li className="flex gap-3.5 text-[1rem] leading-relaxed text-mist-2">
-                  <svg
-                    viewBox="0 0 16 16"
-                    className="mt-[0.35em] h-3.5 w-3.5 shrink-0 text-verify"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M2.5 8.5l3.5 3.5 7.5-8" />
-                  </svg>
-                  <span>{o}</span>
-                </li>
-              </Reveal>
+        {item.slug === "analytics-copilot" ? (
+          <>
+            <figure className="copilot-case-image">
+              <a
+                href="/images/copilot-architecture.png"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Open full-size Analytics Copilot architecture diagram"
+              >
+                <Image
+                  src="/images/copilot-architecture.png"
+                  alt="Analytics Copilot architecture: Streamlit sends a question to FastAPI; the router selects guarded PostgreSQL queries or local embeddings and pgvector retrieval before assembling a grounded answer"
+                  width={1536}
+                  height={1024}
+                  sizes="(max-width:900px) 90vw, 850px"
+                />
+              </a>
+              <figcaption>
+                Project architecture illustration. Online badges depict the
+                illustrated setup, not current service availability.{" "}
+                <a
+                  href="/images/copilot-architecture.png"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Open full size ↗
+                </a>
+              </figcaption>
+            </figure>
+            <ReasoningTrace />
+          </>
+        ) : (
+          <PipelineRow nodes={item.pipeline} />
+        )}
+        <section className="case-section">
+          <h2>What I built</h2>
+          {item.approach.map((step, index) => (
+            <details
+              key={step.heading}
+              className="case-details"
+              open={index === 0}
+            >
+              <summary>{step.heading}</summary>
+              <p>{step.body}</p>
+            </details>
+          ))}
+        </section>
+        {item.slug === "gym-buddy-os" ? (
+          <figure className="case-app-images">
+            <Image
+              src="/images/gym-home.jpg"
+              alt="Gym Buddy member home with a demo workout and class booking"
+              width={1284}
+              height={2283}
+              sizes="(max-width:560px) 45vw, 230px"
+            />
+            <Image
+              src="/images/gym-plans.jpg"
+              alt="Gym Buddy demo workout plan and classes navigation"
+              width={1284}
+              height={2283}
+              sizes="(max-width:560px) 45vw, 230px"
+            />
+            <figcaption>App screenshots with demo content.</figcaption>
+          </figure>
+        ) : null}
+        <section className="case-section">
+          <h2>The result</h2>
+          <ul>
+            {item.outcome.map((outcome) => (
+              <li key={outcome}>{outcome}</li>
             ))}
           </ul>
         </section>
-
-        {/* Next */}
-        <Reveal>
-          <Link
-            href={`/work/${next.slug}`}
-            className="group surface mt-20 flex items-center justify-between gap-6 rounded-[var(--radius-card)] p-6 sm:p-8"
-          >
-            <div>
-              <span className="label">Next</span>
-              <p className="mt-2.5 text-[1.375rem] font-medium tracking-[-0.02em] text-mist transition-colors group-hover:text-iris">
-                {next.title}
-              </p>
-            </div>
-            <svg
-              viewBox="0 0 16 16"
-              className="h-5 w-5 shrink-0 text-mist-3 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1.5 group-hover:text-iris"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M3 8h10M9 4l4 4-4 4" />
-            </svg>
-          </Link>
-        </Reveal>
+        <Link href={`/work/${next.slug}`} className="case-next">
+          <span className="eyebrow">
+            EXPLORE NEXT<strong>{next.title}</strong>
+          </span>
+          <Arrow />
+        </Link>
       </div>
     </article>
   );

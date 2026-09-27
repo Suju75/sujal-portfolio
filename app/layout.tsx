@@ -34,9 +34,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body className="relative min-h-screen antialiased">
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
         <AmbientField />
         <Nav />
-        <main className="relative z-10">{children}</main>
+        <main id="main-content" tabIndex={-1} className="relative z-10">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

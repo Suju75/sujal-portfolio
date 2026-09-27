@@ -15,9 +15,9 @@ export const profile = {
   github: "https://github.com/Suju75",
   linkedin: "https://www.linkedin.com/in/sujal-jethva-1116-/",
   resume: "/Sujal_Jethva_Applied_AI_Resume.pdf",
-  headline: "I build AI systems that show their evidence.",
+  headline: "Applied AI, grounded in data. Built for people.",
   subhead:
-    "Applied AI / LLM engineer with an analytics foundation. I work on the unglamorous half of GenAI — query routing, text-to-SQL guardrails, retrieval grounding, and evaluation — so that an answer arrives with the SQL, the table, and the source that produced it.",
+    "Sujal Jethva is an Applied AI / LLM Engineer in Dallas building RAG, text-to-SQL, and analytics applications. Explore his projects, professional experience, and shipped iOS product.",
   availability: "M.S. Business Analytics candidate · graduating May 2027",
 } as const;
 
@@ -112,9 +112,9 @@ export const work: readonly Work[] = [
     privateNote: null,
     featured: true,
     highlights: [
-      "5-stage evidence pipeline",
+      "SQL, RAG, and combined routing",
       "SELECT-only, read-only guardrails",
-      "Eval-scored routing accuracy",
+      "Routing and numeric eval suite",
     ],
     status: "Source public on GitHub",
     problem:
@@ -133,7 +133,7 @@ export const work: readonly Work[] = [
         body: "Documentation is embedded with local embedding models and searched semantically over pgvector, keeping the retrieval path inside Postgres rather than adding a separate vector service to operate.",
       },
       {
-        heading: "Evaluated, not vibed",
+        heading: "Routing and numeric evaluation",
         body: "A dedicated eval suite scores two things that actually matter in analytics: whether the router picked the right path, and whether the numbers in the final answer are correct. Accuracy claims come from the suite, not from impressions.",
       },
     ],
