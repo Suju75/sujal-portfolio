@@ -6,6 +6,7 @@ import { work } from "@/lib/content";
 import { PipelineRow } from "@/components/pipeline-row";
 import { StatusBadge, WorkLinkButton } from "@/components/work-links";
 import { ReasoningTrace } from "@/components/reasoning-trace";
+import { GymShowcase } from "@/components/gym-showcase";
 import { Arrow } from "@/components/icons";
 export function generateStaticParams() {
   return work.map((w) => ({ slug: w.slug }));
@@ -129,25 +130,7 @@ export default async function CaseStudy({
             </details>
           ))}
         </section>
-        {item.slug === "gym-buddy-os" ? (
-          <figure className="case-app-images">
-            <Image
-              src="/images/gym-home.jpg"
-              alt="Gym Buddy member home with a demo workout and class booking"
-              width={1284}
-              height={2283}
-              sizes="(max-width:560px) 45vw, 230px"
-            />
-            <Image
-              src="/images/gym-plans.jpg"
-              alt="Gym Buddy demo workout plan and classes navigation"
-              width={1284}
-              height={2283}
-              sizes="(max-width:560px) 45vw, 230px"
-            />
-            <figcaption>App screenshots with demo content.</figcaption>
-          </figure>
-        ) : null}
+        {item.slug === "gym-buddy-os" ? <GymShowcase expanded /> : null}
         <section className="case-section">
           <h2>The result</h2>
           <ul>

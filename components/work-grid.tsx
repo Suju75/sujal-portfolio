@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { work } from "@/lib/content";
 import { Arrow } from "./icons";
 import { WorkLinkButton } from "./work-links";
 import { CopilotShowcase } from "./copilot-showcase";
+import { GymShowcase } from "./gym-showcase";
 import { Reveal } from "./ui/reveal";
 export function WorkGrid() {
   const [copilot, gym, stock, gemini] = work;
@@ -44,25 +44,7 @@ export function WorkGrid() {
       <Reveal>
         <article className="feature-project gym-feature">
           <div className="gym-visual">
-            <div className="phone phone-back">
-              <Image
-                src="/images/gym-plans.jpg"
-                alt="The Gym Buddy OS app showing the demo workout plan, classes, and diet navigation"
-                width={1284}
-                height={2283}
-                sizes="(max-width: 600px) 160px, 230px"
-              />
-            </div>
-            <div className="phone phone-front">
-              <Image
-                src="/images/gym-home.jpg"
-                alt="The Gym Buddy OS member home showing check-in, a demo workout, and class booking"
-                width={1284}
-                height={2283}
-                sizes="(max-width: 600px) 180px, 250px"
-              />
-            </div>
-            <p className="image-caption">App screenshots · demo content</p>
+            <GymShowcase />
           </div>
           <div className="project-story">
             <p className="eyebrow accent-mint">SHIPPED / IOS PRODUCT</p>

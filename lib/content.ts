@@ -178,7 +178,7 @@ export const work: readonly Work[] = [
     privateNote: "Source is private — walkthrough available on request.",
     featured: true,
     highlights: [
-      "Public v1.0 on the App Store",
+      "Public release on the App Store",
       "Owner, trainer, member roles",
       "Per-record tenant isolation",
     ],
@@ -201,7 +201,7 @@ export const work: readonly Work[] = [
     ],
     pipeline: ["Auth", "Resolve tenant", "Scope by role", "Serve"],
     outcome: [
-      "Live on the Apple App Store as v1.0 — publicly installable, not a prototype.",
+      "Publicly available to install from the Apple App Store.",
       "Strict per-tenant data isolation enforced on every record.",
       "Role-based dashboards for owner, trainer, and member off one backend.",
     ],
