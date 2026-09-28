@@ -7,6 +7,7 @@ import { PipelineRow } from "@/components/pipeline-row";
 import { StatusBadge, WorkLinkButton } from "@/components/work-links";
 import { ReasoningTrace } from "@/components/reasoning-trace";
 import { GymShowcase } from "@/components/gym-showcase";
+import { StockAgentFlow } from "@/components/stock-agent-flow";
 import { Arrow } from "@/components/icons";
 export function generateStaticParams() {
   return work.map((w) => ({ slug: w.slug }));
@@ -58,6 +59,11 @@ export default async function CaseStudy({
         <h1>{item.title}</h1>
         <p>{item.tagline}</p>
         <div className="project-actions">
+          {item.slug === "stock-selection-agent" ? (
+            <a href="#decision-flow" className="text-link">
+              Explore the decision flow <Arrow />
+            </a>
+          ) : null}
           {item.links.map((link) => (
             <WorkLinkButton key={link.href} link={link} />
           ))}
@@ -114,6 +120,8 @@ export default async function CaseStudy({
             </figure>
             <ReasoningTrace />
           </>
+        ) : item.slug === "stock-selection-agent" ? (
+          <StockAgentFlow />
         ) : (
           <PipelineRow nodes={item.pipeline} />
         )}

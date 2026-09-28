@@ -119,20 +119,30 @@ export function WorkGrid() {
             <p className="eyebrow">RESEARCH / AGENT ORCHESTRATION</p>
             <h3>{stock.title}</h3>
             <p>
-              Separate agents screen, challenge, and decide. An adversarial gate
-              filters candidates before Telegram delivery.
+              Quantitative screening, an analyst council, and a separate
+              challenge-and-rebuttal loop. Follow each decision—or see why the
+              system produces no signal.
             </p>
             <Link href={`/work/${stock.slug}`} className="text-link">
-              See the architecture <Arrow />
+              Explore the decision flow <Arrow />
             </Link>
           </div>
-          <div className="research-flow">
-            <div>
-              <span>Screen</span>
+          <div className="research-flow stock-home-flow">
+            <div aria-label="Nifty 100 screened to up to five shortlisted candidates and zero or one signal per briefing">
+              <span>
+                <strong>100</strong>
+                <small>Universe</small>
+              </span>
               <Arrow />
-              <span>Challenge</span>
+              <span>
+                <strong>≤5</strong>
+                <small>Shortlist</small>
+              </span>
               <Arrow />
-              <span>Decide</span>
+              <span>
+                <strong>0–1</strong>
+                <small>Signal</small>
+              </span>
             </div>
             <p>Nifty 100 · Paper-trading only · Private repository</p>
           </div>

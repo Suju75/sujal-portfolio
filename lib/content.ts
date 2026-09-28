@@ -209,43 +209,51 @@ export const work: readonly Work[] = [
   {
     slug: "stock-selection-agent",
     title: "Indian Stock Selection Agent",
-    kind: "Multi-agent research pipeline",
+    kind: "Agentic research & decision routing",
     year: "2026",
     tagline:
-      "Role-specific agents move Nifty 100 candidates through quantitative filters and an adversarial scoring gate before anything is allowed through.",
+      "A Nifty 100 research pipeline that screens, proposes, challenges, and checks each candidate—with explicit routes for retrying or producing no signal.",
     premise:
-      "A single LLM asked to pick stocks will agree with itself. Separating the roles that screen, challenge, and decide is what makes the output worth reading.",
-    stack: ["Python", "LLM orchestration", "Telegram Bot API"],
+      "A proposal is only the start. The engineering challenge is deciding what evidence it needs, what can reject it, and when to stop searching.",
+    stack: [
+      "Python",
+      "Claude API",
+      "pandas",
+      "APScheduler",
+      "SQLite",
+      "Telegram Bot API",
+      "Streamlit",
+    ],
     links: [],
     privateNote: "Private repo — available on request.",
     featured: false,
     highlights: [
       "Nifty 100 screening universe",
-      "Adversarial scoring gate",
+      "Bounded retries + explicit abstention",
       "Paper-trading only",
     ],
     status: null,
     problem:
-      "Screening the Nifty 100 with one model produces confident, unfalsifiable picks. There is no internal disagreement, so nothing filters out the false positives — which is the only failure mode that costs you anything.",
+      "An LLM can produce a convincing stock thesis without a reliable process behind it. This project makes that process explicit: filter the universe, constrain the context, challenge a proposal, record the rejection reasons, and stop when the evidence or compute budget is insufficient.",
     approach: [
       {
-        heading: "Separate the roles",
-        body: "Screening, challenging, and deciding are handled by distinct role-specific agents with separate responsibilities, so the component that proposes a candidate is never the component that approves it.",
+        heading: "Route work by cost and responsibility",
+        body: "Deterministic indicators narrow the Nifty 100 before Haiku triage. A single Sonnet council call contributes five role-specific perspectives, followed by separate proposal, challenge, and rebuttal stages. The compute budget changes both the proposing model and the candidate-attempt limit.",
       },
       {
-        heading: "A devil's advocate in the loop",
-        body: "Candidates that clear the quantitative filters then face an adversarial scoring gate whose job is to argue against them. Surviving that argument is the bar, not passing a screen.",
+        heading: "Make rejection a first-class route",
+        body: "Candidate review includes decision validation, optional price sanity checks, a devil’s-advocate challenge, and a checked rebuttal. Configurable memory and ship gates add further rejection points. A failure moves to the next candidate within the attempt limit; the first complete pass ends the search.",
       },
       {
-        heading: "An explicit ship gate",
-        body: "Rather than ranking everything, the pipeline applies explicit ship-gate logic tuned to suppress false positives, and delivers what survives through Telegram.",
+        heading: "Preserve decisions and learn from closures",
+        body: "Telegram briefings communicate either the accepted paper-research candidate or a no-signal result. SQLite stores decision traces, rejection reasons, and model usage. With continuous learning enabled, closed paper outcomes feed reflection, historical analogues, and lessons for later reviews.",
       },
     ],
-    pipeline: ["Screen", "Filter", "Challenge", "Ship gate"],
+    pipeline: ["Screen", "Triage", "Council", "Review", "Briefing", "Learn"],
     outcome: [
-      "Nifty 100 universe narrowed through layered quantitative filters and an adversarial review stage.",
-      "Explicit ship-gate logic used to control false positives instead of ranking everything.",
-      "Results delivered via Telegram. Paper-trading only — no live capital deployed.",
+      "An inspectable route from a 100-stock universe to at most one accepted candidate per briefing.",
+      "Bounded candidate retries, model-cost controls, explicit rejection reasons, and a no-signal outcome when no attempted candidate passes.",
+      "Paper-research delivery through Telegram, with stored traces and an optional feedback loop. No live capital deployed; trading performance is not claimed.",
     ],
   },
   {
