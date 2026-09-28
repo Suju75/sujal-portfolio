@@ -424,7 +424,7 @@
   color: #dee0f9;
   font: 11px var(--font-mono);
   letter-spacing: 0.14em;
-  background: var(--color-ink);
+  background: transparent;
   padding: 8px 10px;
   z-index: 2;
 }
