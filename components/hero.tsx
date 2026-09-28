@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { profile, work } from "@/lib/content";
 import { Arrow, GithubIcon } from "./icons";
 import { Reveal } from "./ui/reveal";
@@ -103,9 +104,7 @@ export function Hero() {
           rel="noreferrer"
           className="proof-link proof-app"
         >
-          <span className="app-icon" aria-hidden="true">
-            G
-          </span>
+          <Image className="app-icon" src="/images/gym-os-icon.webp" alt="" width={38} height={38} />
           <span>
             <strong>The Gym Buddy OS</strong>
             <small>Download on the App Store</small>

@@ -515,14 +515,12 @@
   color: var(--color-verify);
 }
 .app-icon {
-  color: var(--color-verify);
   border: 1px solid #8ae4cb42;
-  width: 30px;
-  height: 32px;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
   border-radius: 8px;
-  display: grid;
-  place-items: center;
-  font-weight: 700;
+  object-fit: contain;
 }
 .content-section {
   padding-top: 108px;
@@ -833,6 +831,25 @@
   grid-template-columns: 1.1fr 1fr;
   background: #0c1318;
 }
+.gym-project-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.gym-project-title > img {
+  flex-shrink: 0;
+  border-radius: 12px;
+  border: 1px solid #ffffff20;
+}
+.gym-project-title > h3 {
+  margin: 0;
+}
+.gym-case-title {
+  margin-block: 20px;
+}
+.gym-case-title > h1 {
+  margin: 0;
+}
 .gym-visual {
   display: flex;
   align-items: center;
@@ -908,12 +925,16 @@
 }
 .gym-screen figcaption {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 5px;
   padding-top: 8px;
+  flex-wrap: wrap;
   font-size: 13px;
   color: var(--color-mist);
+}
+.gym-screen figcaption > span {
+  padding-top: 12px;
 }
 .gym-screen figcaption button {
   display: inline-flex;
@@ -932,7 +953,7 @@
 .gym-screenshot-note {
   margin-top: 18px;
   text-align: center;
-  font: 10px/1.7 var(--font-mono);
+  font: 12px/1.7 var(--font-mono);
   color: var(--color-mist-3);
 }
 .gym-lightbox {
@@ -2031,6 +2052,10 @@ body:has(.gym-lightbox[open]) {
   }
   .gym-showcase {
     padding: 26px 18px;
+  }
+  .gym-case-title > img {
+    width: 48px;
+    height: 48px;
   }
   .gym-screens,
   .gym-showcase-expanded .gym-screens {

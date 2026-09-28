@@ -56,7 +56,12 @@ export default async function CaseStudy({
         <p className="eyebrow accent-iris">
           {item.kind} / {item.year}
         </p>
-        <h1>{item.title}</h1>
+        {item.slug === "gym-buddy-os" ? (
+          <div className="gym-project-title gym-case-title">
+            <Image src="/images/gym-os-icon.webp" alt="Gym OS app icon" width={72} height={72} />
+            <h1>{item.title}</h1>
+          </div>
+        ) : <h1>{item.title}</h1>}
         <p>{item.tagline}</p>
         <div className="project-actions">
           {item.slug === "stock-selection-agent" ? (

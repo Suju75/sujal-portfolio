@@ -6,14 +6,14 @@ import { Arrow } from "./icons";
 
 const screens = [
   {
-    name: "Today",
-    src: "/images/gym-today.png",
-    alt: "Complete Gym Buddy Today screen showing member check-in, a demo workout, class booking, and the bottom navigation",
+    name: "Revenue & renewals",
+    src: "/images/gym-owner-revenue.png",
+    alt: "Gym OS owner dashboard showing monthly revenue, overdue memberships, upcoming renewals, revenue per active member, and revenue by plan",
   },
   {
-    name: "Train",
-    src: "/images/gym-train.png",
-    alt: "Complete Gym Buddy Train screen showing the demo workout plan, gym plans, classes, diet, and the bottom navigation",
+    name: "Membership health",
+    src: "/images/gym-owner-membership.png",
+    alt: "Gym OS owner dashboard showing the floor-traffic history state, expired-member renewal alert, and membership breakdown by active, expired, suspended, pending, and frozen status",
   },
 ];
 
@@ -30,7 +30,7 @@ export function GymShowcase({ expanded = false }: { expanded?: boolean }) {
 
   return (
     <div className={`gym-showcase${expanded ? " gym-showcase-expanded" : ""}`}>
-      <p className="eyebrow accent-mint">INSIDE THE APP</p>
+      <p className="eyebrow accent-mint">THE OWNER’S VIEW</p>
       <div className="gym-screens">
         {screens.map((item, index) => (
           <figure key={item.src} className="gym-screen">
@@ -44,8 +44,8 @@ export function GymShowcase({ expanded = false }: { expanded?: boolean }) {
               <Image
                 src={item.src}
                 alt={item.alt}
-                width={1200}
-                height={2596}
+                width={1206}
+                height={2622}
                 sizes={
                   expanded
                     ? "(max-width:560px) 40vw, 270px"
@@ -70,7 +70,7 @@ export function GymShowcase({ expanded = false }: { expanded?: boolean }) {
         ))}
       </div>
       <p className="gym-screenshot-note">
-        App Store screenshots · demo content
+        Owner dashboard · revenue, renewals & membership health
       </p>
       <dialog
         ref={dialog}
@@ -95,8 +95,8 @@ export function GymShowcase({ expanded = false }: { expanded?: boolean }) {
           <Image
             src={screen.src}
             alt={screen.alt}
-            width={1200}
-            height={2596}
+            width={1206}
+            height={2622}
             sizes="(max-width:560px) 90vw, 440px"
           />
           <a

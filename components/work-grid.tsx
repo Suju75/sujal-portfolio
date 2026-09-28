@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { work } from "@/lib/content";
 import { Arrow } from "./icons";
 import { WorkLinkButton } from "./work-links";
@@ -48,7 +49,10 @@ export function WorkGrid() {
           </div>
           <div className="project-story">
             <p className="eyebrow accent-mint">SHIPPED / IOS PRODUCT</p>
-            <h3>The Gym Buddy OS</h3>
+            <div className="gym-project-title">
+              <Image src="/images/gym-os-icon.webp" alt="Gym OS app icon" width={48} height={48} />
+              <h3>The Gym Buddy OS</h3>
+            </div>
             <p className="project-deck">
               From backend
               <br />
@@ -59,7 +63,7 @@ export function WorkGrid() {
               Built across the API, mobile app, and release pipeline.
             </p>
             <ul className="feature-points">
-              <li>Three roles, one connected product</li>
+              <li>Owner analytics: revenue, renewals & memberships</li>
               <li>Per-record tenant isolation</li>
               <li>Public release on the Apple App Store</li>
             </ul>
