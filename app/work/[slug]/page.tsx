@@ -7,6 +7,7 @@ import { PipelineRow } from "@/components/pipeline-row";
 import { StatusBadge, WorkLinkButton } from "@/components/work-links";
 import { ReasoningTrace } from "@/components/reasoning-trace";
 import { GymShowcase } from "@/components/gym-showcase";
+import { GeminiShowcase } from "@/components/gemini-showcase";
 import { StockAgentFlow } from "@/components/stock-agent-flow";
 import { Arrow } from "@/components/icons";
 export function generateStaticParams() {
@@ -90,6 +91,7 @@ export default async function CaseStudy({
         </div>
       </div>
       <div className="case-body">
+        {item.slug === "gemini-adoption-system" ? <GeminiShowcase /> : null}
         <section className="case-section">
           <h2>The problem</h2>
           <p>{item.problem}</p>

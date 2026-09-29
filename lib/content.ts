@@ -273,7 +273,7 @@ export const work: readonly Work[] = [
     ],
     links: [],
     privateNote:
-      "Internal client work — architecture discussed at a high level only.",
+      "Internal client work — public overview with an illustrative sample-data dashboard.",
     featured: false,
     highlights: [
       "29 licenses across 6 teams",

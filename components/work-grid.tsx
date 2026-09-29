@@ -5,6 +5,7 @@ import { Arrow } from "./icons";
 import { WorkLinkButton } from "./work-links";
 import { CopilotShowcase } from "./copilot-showcase";
 import { GymShowcase } from "./gym-showcase";
+import { GeminiShowcase } from "./gemini-showcase";
 import { Reveal } from "./ui/reveal";
 export function WorkGrid() {
   const [copilot, gym, stock, gemini] = work;
@@ -99,21 +100,24 @@ export function WorkGrid() {
             <Link href={`/work/${gemini.slug}`} className="text-link">
               Explore the Gemini adoption system <Arrow />
             </Link>
-            <small>Internal work · public architecture overview</small>
+            <small>Internal work · illustrated dashboard & architecture</small>
           </div>
-          <div className="impact-facts">
-            <div>
-              <strong>29</strong>
-              <span>licenses tracked</span>
+          <div className="impact-evidence">
+            <GeminiShowcase compact />
+            <div className="impact-facts">
+              <div>
+                <strong>29</strong>
+                <span>licenses tracked</span>
+              </div>
+              <div>
+                <strong>6</strong>
+                <span>teams covered</span>
+              </div>
+              <p>
+                Admin Reports API <span>→</span> Apps Script <span>→</span> Looker
+                Studio
+              </p>
             </div>
-            <div>
-              <strong>6</strong>
-              <span>teams covered</span>
-            </div>
-            <p>
-              Admin Reports API <span>→</span> Apps Script <span>→</span> Looker
-              Studio
-            </p>
           </div>
         </article>
       </Reveal>
